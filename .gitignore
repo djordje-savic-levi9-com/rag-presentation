@@ -1,0 +1,30 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Build outputs
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# macOS system files
+.DS_Store
+
+# TypeScript build info
+*.tsbuildinfo
+
+# IDE files
+.idea/
+.vscode/
+
+# Optional: Jupyter/IPython files
+*.ipynb_checkpoints
+lab.ipy
+
