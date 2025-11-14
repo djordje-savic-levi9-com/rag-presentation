@@ -1,4 +1,4 @@
-import { addCatFactsToDatabase } from './embedding-db';
+import {addCatFactsToDatabase} from './embedding';
 
 async function main() {
     const fileName = process.argv[2];
@@ -11,4 +11,3 @@ async function main() {
 }
 
 void main();
-

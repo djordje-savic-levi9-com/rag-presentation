@@ -2,17 +2,14 @@ import ollama from 'ollama';
 import fs from 'fs/promises';
 import path from 'path';
 
-// Embedding model constant
-export const EMBEDDING_MODEL = 'hf.co/CompendiumLabs/bge-base-en-v1.5-gguf';
+// Embdeovanje i simulacija vektorske baze podataka
 
-// Each element is a tuple: [chunk, embedding]
 export type VectorEntry = [string, number[]];
 export const VECTOR_DB: VectorEntry[] = [];
 
-const CACHE_PATH = path.join(process.cwd(), 'embedding-cache.json');
+const CACHE_PATH = path.join(process.cwd(), '/data/embedding-cache.json');
 let embeddingCache: Record<string, number[]> = {};
 
-// Load cache from disk
 async function loadEmbeddingCache() {
     try {
         const data = await fs.readFile(CACHE_PATH, 'utf-8');
@@ -22,23 +19,21 @@ async function loadEmbeddingCache() {
     }
 }
 
-// Save cache to disk
 async function saveEmbeddingCache() {
     await fs.writeFile(CACHE_PATH, JSON.stringify(embeddingCache, null, 2), 'utf-8');
 }
 
-// Embedding with cache
 export async function addChunkToDatabase(chunk: string): Promise<void> {
     if (!embeddingCache[chunk]) {
-        const result = await ollama.embed({ model: EMBEDDING_MODEL, input: chunk });
-        const embedding = result.embeddings[0] as number[];
-        embeddingCache[chunk] = embedding;
+        const model = process.env.EMBEDDING_MODEL;
+        if(!model) throw new Error('EMBEDDING_MODEL environment variable is not set');
+        const result = await ollama.embed({ model, input: chunk });
+        embeddingCache[chunk] = result.embeddings[0] as number[];
         await saveEmbeddingCache();
     }
     VECTOR_DB.push([chunk, embeddingCache[chunk]]);
 }
 
-// Read data from a file, split them into chunks, and add to the vector database
 export async function addCatFactsToDatabase(filePath: string): Promise<void> {
     await loadEmbeddingCache();
     const data = await fs.readFile(filePath, 'utf-8');
