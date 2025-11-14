@@ -88,3 +88,4 @@ npm start
 - Modeli za embedding i chat se mogu promeniti u `.env`.
 - Ako koristiš drugi fajl osim `cat-facts.txt`, pokreni embedding za taj fajl.
 - OpenAI embedding trenutno nije implementiran; sistem uvek koristi Ollama za vektore.
+- Ollama model ne podrzava srpski jezik

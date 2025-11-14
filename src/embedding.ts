@@ -1,22 +1,21 @@
 import ollama from 'ollama';
 import fs from 'fs/promises';
 import path from 'path';
+import 'dotenv/config';
 
-// Embdeovanje i simulacija vektorske baze podataka
-
-export type VectorEntry = [string, number[]];
-export const VECTOR_DB: VectorEntry[] = [];
+// Embdeovanje i kesiranje
 
 const CACHE_PATH = path.join(process.cwd(), '/data/embedding-cache.json');
 let embeddingCache: Record<string, number[]> = {};
 
-async function loadEmbeddingCache() {
+export async function loadEmbeddingCache() {
     try {
         const data = await fs.readFile(CACHE_PATH, 'utf-8');
         embeddingCache = JSON.parse(data);
     } catch (e) {
         embeddingCache = {};
     }
+    return embeddingCache;
 }
 
 async function saveEmbeddingCache() {
@@ -31,7 +30,6 @@ export async function addChunkToDatabase(chunk: string): Promise<void> {
         embeddingCache[chunk] = result.embeddings[0] as number[];
         await saveEmbeddingCache();
     }
-    VECTOR_DB.push([chunk, embeddingCache[chunk]]);
 }
 
 export async function addCatFactsToDatabase(filePath: string): Promise<void> {

@@ -1,5 +1,6 @@
 import ollama from 'ollama';
 import OpenAI from 'openai';
+import 'dotenv/config';
 
 export type ChatMessage = {
     role: 'system' | 'user' | 'assistant';
