@@ -64,7 +64,7 @@ Ovaj projekat je jednostavan RAG (Retrieval-Augmented Generation) chatbot sa pod
 Za svaki tekstualni fajl (npr. `cat-facts.txt`) možeš pokrenuti embedding i upis u cache:
 
 ```sh
-npm run embed -- ./raw_data/cat-facts.txt
+  npm run embed -- ./raw_data/cat-facts.txt
 ```
 
 - Embeddingi se keširaju u fajlu `data/embedding-cache.json`.
@@ -77,7 +77,13 @@ Chatbot koristi prethodno generisane embeddinge iz cache-a.
 Pokreni chat sa:
 
 ```sh
-npm start
+  npm start
+```
+
+Ako hoćeš da pokreneš chat bez RAG-a (samo LLM), koristi:
+
+```sh
+  npm run start-no-rag 
 ```
 
 - Za izlaz iz chata, ukucaj `exit`.

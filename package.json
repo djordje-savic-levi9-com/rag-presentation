@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "tsx ./src/index.ts",
+    "start-no-rag": "tsx ./src/index.ts --no-rag",
     "embed": "tsx ./src/proces_embedding.ts"
   },
   "dependencies": {
