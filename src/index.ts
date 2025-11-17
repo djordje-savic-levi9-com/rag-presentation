@@ -23,10 +23,14 @@ async function chatbot() {
             console.log(` - (similarity: ${similarity.toFixed(2)}) ${chunk}`)
         );
 
-        const instructionPrompt = `You are a helpful chatbot.
+        let instructionPrompt = `You are a helpful chatbot.
         Use only the following pieces of context to answer the question. 
         Don't make up any new information:
         ${retrievedKnowledge.map(([chunk]) => ` - ${chunk}`).join('\n')}`;
+
+        if (process.env.USE_RAG === "false"){
+            instructionPrompt = `You are a helpful chatbot. Try to answer user question.".`;
+        }
 
         console.log(chalk.blueBright(instructionPrompt));
         console.log(chalk.magenta(userInput));
