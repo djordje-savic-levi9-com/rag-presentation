@@ -16,13 +16,21 @@ async function chatbot() {
     }
 
     try {
+        let instructionPrompt = '';
+
+        if (process.argv.includes('--no-rag')){
+            const aiMessage = await chatClient.chat([{ role: 'user', content: userInput }]);
+            console.log(chalk.greenBright.bold('\nAI:') + ' ' + chalk.green(aiMessage));
+            continue;
+        }
+
         const retrievedKnowledge = await retrieve(userInput, 3);
         console.log(chalk.yellow('\nRetrieved knowledge:'));
         retrievedKnowledge.forEach(([chunk, similarity]) =>
             console.log(` - (similarity: ${similarity.toFixed(2)}) ${chunk}`)
         );
 
-        let instructionPrompt = `
+        instructionPrompt = `
 You are a helpful assistant. Answer questions based on the provided context.
 CONTEXT:
 ${retrievedKnowledge.map(([chunk], index) => `${index + 1}. ${chunk}`).join('\n')}
@@ -33,10 +41,6 @@ INSTRUCTIONS:
 - Be concise and accurate
 - Reference the context when appropriate
 `;
-        if (process.env.USE_RAG === "false"){
-            instructionPrompt = `You are a helpful chatbot.`;
-        }
-
         // console.log(chalk.yellow('\nInstruction Prompt:'));
         // console.log(instructionPrompt);
 
