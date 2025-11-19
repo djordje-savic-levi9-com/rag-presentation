@@ -38,6 +38,7 @@ Ovaj projekat je jednostavan RAG (Retrieval-Augmented Generation) chatbot sa pod
 2. **Pokreni Ollama server** (neophodno za generisanje embeddinga čak i ako koristiš OpenAI za chat):
    - Preuzmi i instaliraj Ollama: https://ollama.com/
    - Pokreni server: `ollama serve`
+   - Ostavi server da radi u pozadini dok koristiš ovaj projekat.
 
 3. **Preuzmi potrebne modele za Ollama**
 
