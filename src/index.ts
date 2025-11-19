@@ -6,10 +6,9 @@ import { retrieve } from './retriever';
 
 const chatClient = createChatClient();
 
-// Chatbot aplikacija
 async function chatbot() {
   while (true) {
-    const userInput = readlineSync.question(chalk.cyan.bold('\nTi: '));
+    const userInput = readlineSync.question(chalk.cyan.bold('\nYou: '));
 
     if (userInput.trim().toLowerCase() === 'exit') {
       console.log('👋 Bye!');
@@ -23,19 +22,24 @@ async function chatbot() {
             console.log(` - (similarity: ${similarity.toFixed(2)}) ${chunk}`)
         );
 
-        let instructionPrompt = `You are a helpful chatbot.
-        Use only the following pieces of context to answer the question. 
-        Don't make up any new information:
-        ${retrievedKnowledge.map(([chunk]) => ` - ${chunk}`).join('\n')}`;
+        let instructionPrompt = `
+You are a helpful assistant. Answer questions based on the provided context.
+CONTEXT:
+${retrievedKnowledge.map(([chunk], index) => `${index + 1}. ${chunk}`).join('\n')}
 
+INSTRUCTIONS:
+- Use only the information from the context above
+- If the context doesn't contain relevant information, say "I don't have enough information to answer that question"
+- Be concise and accurate
+- Reference the context when appropriate
+`;
         if (process.env.USE_RAG === "false"){
             instructionPrompt = `You are a helpful chatbot. Try to answer user question.".`;
         }
 
-        console.log(chalk.blueBright(instructionPrompt));
-        console.log(chalk.magenta(userInput));
+        // console.log(chalk.yellow('\nInstruction Prompt:'));
+        // console.log(instructionPrompt);
 
-        // Use generic chat client for response
         const aiMessage = await chatClient.chat([
             { role: 'system', content: instructionPrompt },
             { role: 'user', content: userInput },
