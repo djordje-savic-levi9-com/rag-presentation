@@ -34,7 +34,7 @@ INSTRUCTIONS:
 - Reference the context when appropriate
 `;
         if (process.env.USE_RAG === "false"){
-            instructionPrompt = `You are a helpful chatbot. Try to answer user question.".`;
+            instructionPrompt = `You are a helpful chatbot.`;
         }
 
         // console.log(chalk.yellow('\nInstruction Prompt:'));
@@ -50,7 +50,7 @@ INSTRUCTIONS:
         console.error(chalk.redBright.bold('Error calling chat client:'), chalk.red(errorMsg));
     }
   }
-  console.log(chalk.gray('Kraj konverzacije.'));
+  console.log(chalk.gray('End of conversation.'));
 }
 
 void chatbot();
