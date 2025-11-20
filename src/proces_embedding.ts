@@ -1,4 +1,4 @@
-import {addCatFactsToDatabase} from './embedding';
+import {addEmbeddingToDatabase} from './embedding';
 
 async function main() {
     const fileName = process.argv[2];
@@ -6,7 +6,7 @@ async function main() {
         console.error('Usage: npm run embed -- <filename>');
         process.exit(1);
     }
-    await addCatFactsToDatabase(fileName);
+    await addEmbeddingToDatabase(fileName);
     console.log('Embedding finished.');
 }
 

@@ -32,13 +32,13 @@ export async function addChunkToDatabase(chunk: string): Promise<void> {
     }
 }
 
-export async function addCatFactsToDatabase(filePath: string): Promise<void> {
+export async function addEmbeddingToDatabase(filePath: string): Promise<void> {
     await loadEmbeddingCache();
     const data = await fs.readFile(filePath, 'utf-8');
     const facts = data.split('\n').map(line => line.trim()).filter(Boolean);
     for (let i = 0; i < facts.length; i++) {
         const fact = facts[i];
         await addChunkToDatabase(fact);
-        console.log(`Added cat fact ${i + 1}/${facts.length} to the database`);
+        console.log(`Added fact ${i + 1}/${facts.length} to the database`);
     }
 }
