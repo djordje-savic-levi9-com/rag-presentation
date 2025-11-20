@@ -62,10 +62,10 @@ Ovaj projekat je jednostavan RAG (Retrieval-Augmented Generation) chatbot sa pod
 
 ## Kako pokrenuti embedding (generisanje embeddinga za tekstualni fajl)
 
-Za svaki tekstualni fajl (npr. `cat-facts.txt`) možeš pokrenuti embedding i upis u cache:
+Za svaki tekstualni fajl (npr. `eurobasket-17-25.txt`) možeš pokrenuti embedding i upis u cache:
 
 ```sh
-  npm run embed -- ./raw_data/cat-facts.txt
+  npm run embed -- ./raw_data/eurobasket-17-25
 ```
 
 - Embeddingi se keširaju u fajlu `data/embedding-cache.json`.
